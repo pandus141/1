@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens – odtworzone na podstawie analizy openai.com (15.10.2026).
+ * Tryb ciemny jest domyślny; tryb jasny włącza klasa .light na <html>.
+ */
+
+@custom-variant light (&:where(.light, .light *));
+
+@theme {
+  /* Typografia */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Skala tekstu: [rozmiar, interlinia, tracking, waga] */
+  --text-hero: 4rem;             /* 64px – H1 artykułu / strony produktowej */
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.03em;
+  --text-hero--font-weight: 500;
+
+  --text-display: 3rem;          /* 48px – hero / H2 sekcji produktowych */
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 500;
+
+  --text-h2: 2rem;               /* 32px */
+  --text-h2--line-height: 1.14;
+  --text-h2--letter-spacing: -0.0165em;
+  --text-h2--font-weight: 500;
+
+  --text-h3: 1.875rem;           /* 30px – śródtytuł artykułu, tytuły funkcji */
+  --text-h3--line-height: 1.32;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 500;
+
+  --text-h5: 1.375rem;           /* 22px – „Przeczytaj więcej”, karty produktowe */
+  --text-h5--line-height: 1.26;
+  --text-h5--letter-spacing: -0.01em;
+  --text-h5--font-weight: 500;
+
+  --text-quote: 1.125rem;        /* 18px – cytat w artykule */
+  --text-quote--line-height: 1.32;
+  --text-quote--letter-spacing: -0.025em;
+  --text-quote--font-weight: 500;
+
+  --text-toc: 0.75rem;           /* 12px – spis treści */
+  --text-toc--line-height: 1.25;
+
+  --text-h4: 1.25rem;            /* 20px */
+  --text-h4--line-height: 1.2;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: 500;
+
+  --text-card: 1rem;             /* 16px tytuł karty */
+  --text-card--line-height: 1.25;
+  --text-card--letter-spacing: -0.01em;
+  --text-card--font-weight: 500;
+
+  --text-p1: 1.0625rem;          /* 17px body */
+  --text-p1--line-height: 1.647;
+  --text-p1--letter-spacing: -0.01em;
+
+  --text-p2: 1rem;               /* 16px */
+  --text-p2--line-height: 1.5;
+  --text-p2--letter-spacing: -0.01em;
+
+  --text-meta: 0.875rem;         /* 14px */
+  --text-meta--line-height: 1.4;
+  --text-meta--font-weight: 500;
+
+  --text-cta: 0.875rem;          /* 14px przyciski */
+  --text-cta--line-height: 1;
+  --text-cta--font-weight: 500;
+
+  --text-footer: 0.8125rem;      /* 13px */
+  --text-footer--line-height: 1.514;
+  --text-footer--font-weight: 500;
+
+  /* Layout */
+  --spacing-header-h: 4rem;
+  --container-content: 76rem;    /* 1216px */
+  --container-narrow: 44rem;     /* 704px */
+  --container-article: 42rem;     /* 672px – kolumna tekstu artykułu */
+  --container-wide: 56rem;       /* 896px – szerokie grafiki / H1 artykułu */
+  --container-help: 64rem;       /* 1024px – Centrum pomocy */
+  --breakpoint-nav: 63.75rem;    /* 1020px */
+
+  /* Ruch */
+  --ease-curve-a: cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-fade-in: fade-in 0.5s var(--ease-curve-a) both;
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* Kolory semantyczne – hierarchia przez przezroczystość */
+@theme inline {
+  --color-background: var(--bg);
+  --color-primary-100: var(--fg-100);
+  --color-primary-80: var(--fg-80);
+  --color-primary-60: var(--fg-60);
+  --color-primary-44: var(--fg-44);
+  --color-primary-12: var(--fg-12);
+  --color-primary-4: var(--fg-4);
+  --color-inverse: var(--inv);
+}
+
+:root {
+  --bg: #000;
+  --inv: #000;
+  --fg-100: #fff;
+  --fg-80: rgb(255 255 255 / 0.8);
+  --fg-60: rgb(255 255 255 / 0.6);
+  --fg-44: rgb(255 255 255 / 0.44);
+  --fg-12: rgb(255 255 255 / 0.12);
+  --fg-4: rgb(255 255 255 / 0.04);
+  color-scheme: dark;
+}
+
+:root.light {
+  --bg: #fff;
+  --inv: #fff;
+  --fg-100: #000;
+  --fg-80: rgb(0 0 0 / 0.8);
+  --fg-60: rgb(0 0 0 / 0.6);
+  --fg-44: rgb(0 0 0 / 0.44);
+  --fg-12: rgb(0 0 0 / 0.12);
+  --fg-4: rgb(0 0 0 / 0.04);
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: var(--spacing-header-h);
+  }
+  body {
+    @apply bg-background text-primary-100 font-sans text-p1 antialiased;
+    font-feature-settings: "liga" on, "calt" on;
+  }
+  :focus-visible {
+    outline: 2px solid var(--fg-100);
+    outline-offset: 2px;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
